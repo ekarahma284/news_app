@@ -1,7 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
 import Indonesia from "./Pages/Indonesia";
 import Programing from "./Pages/Programing";
-import Covid from "./Pages/Covid";
+import Search from "./Pages/Search";
+
+// import Covid from "./Pages/Covid";
 import Saved from "./Pages/Saved";
 import MainLayout from "./layouts/mainLayout";
 import Home from "./Pages/Home";
@@ -29,13 +31,15 @@ const router = createBrowserRouter([
                     element: <Programing />,
                 },
                 {
-                    path: "covid-19", // Path untuk halaman Covid
-                    element: <Covid />,
-                },
-                {
                     path: "saved", // Path untuk halaman Saved
                     element: <Saved />,
                 },
+                {
+                    path: "Search", // Path untuk halaman Saved
+                    element: <Search />,
+                },
+
+              //  <Route path="/search" element={<Search />} />
         ]
     }
 ]);
