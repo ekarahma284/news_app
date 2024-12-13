@@ -1,12 +1,14 @@
 import React from "react";
 import ReactDOM from 'react-dom/client';
-import { RouterProvider } from "react-router-dom"; // Import RouterProvider
-import router from "./Router";// Mengimpor router dari router.jsx
-import Home from "./Pages/Home";
+import { RouterProvider } from "react-router-dom";
+import { Provider } from 'react-redux';
+import router from "./Router";
+import store from './store';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
-        <RouterProvider router={router} />
-        <Home></Home>
+        <Provider store={store}>
+            <RouterProvider router={router} />
+        </Provider>
     </React.StrictMode>
 );
