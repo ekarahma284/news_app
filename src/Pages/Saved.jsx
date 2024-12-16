@@ -5,21 +5,22 @@ import { removeArticle } from "../slice/savedSlice";
 
 function Save() {
     const savedArticles = useSelector((state) => state.savedArticles);
+    console.log(savedArticles);
+    
     const dispatch = useDispatch();
-    const [showAlert, setShowAlert] = useState(false); // State untuk mengontrol alert
-    const [alertMessage, setAlertMessage] = useState(""); // Pesan untuk alert
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState("");
 
     const handleRemove = (index) => {
-        const articleToRemove = savedArticles[index]; // Artikel yang akan dihapus
-        dispatch(removeArticle(index)); // Hapus artikel dari Redux state
-        setAlertMessage(`Berita "${articleToRemove.title}" berhasil dihapus!`); // Set pesan alert
-        setShowAlert(true); // Tampilkan alert
-        setTimeout(() => setShowAlert(false), 2000); // Sembunyikan alert setelah 2 detik
+        const articleToRemove = savedArticles[index];
+        dispatch(removeArticle(index));
+        setAlertMessage(`Berita "${articleToRemove.title}" berhasil dihapus!`);
+        setShowAlert(true);
+        setTimeout(() => setShowAlert(false), 2000);
     };
 
     return (
         <Container className="my-4">
-            {/* Alert yang bersifat global */}
             {showAlert && (
                 <Alert
                     variant="danger"

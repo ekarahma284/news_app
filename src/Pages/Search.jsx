@@ -9,12 +9,12 @@ function Search() {
     const results = useSelector((state) => state.search.results);
     const location = useLocation();
     const query = new URLSearchParams(location.search).get("q");
-    const [isLoading, setIsLoading] = useState(false); // Awalnya tidak memuat
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         if (query) {
             const fetchData = async () => {
-                setIsLoading(true); // Set status loading sebelum fetch
+                setIsLoading(true);
                 try {
                     const response = await fetch(
                         `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${query}&api-key=ftmLzO39nIIsE4BUruG9PayJCjvRkI2U`
@@ -23,9 +23,9 @@ function Search() {
                     dispatch(setSearchResults(data.response.docs || []));
                 } catch (error) {
                     console.error("Error fetching articles:", error);
-                    dispatch(setSearchResults([])); // Kosongkan hasil jika terjadi error
+                    dispatch(setSearchResults([])); 
                 } finally {
-                    setIsLoading(false); // Set status loading selesai
+                    setIsLoading(false);
                 }
             };
 
@@ -33,7 +33,7 @@ function Search() {
                 fetchData();
             }, 1000);
 
-            return () => clearTimeout(delay); // Bersihkan timeout
+            return () => clearTimeout(delay);
         }
     }, [query, dispatch]);
 

@@ -3,6 +3,9 @@ import { Container, Row, Col, Card, Button, Stack, Alert } from "react-bootstrap
 import Spinner from "react-bootstrap/Spinner";
 import { useDispatch } from 'react-redux';
 import { addArticle } from "../slice/savedSlice";
+import useIndonesia from "../hooks/useIndonesia";
+import useTechnology from "../hooks/useTechnology";
+import useMostPopuler from "../hooks/useMostPopuler";
 
 function Home() {
     const [beritaHome, setBeritaHome] = useState([]);
@@ -10,6 +13,18 @@ function Home() {
     const [showAlert, setShowAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
     const dispatch = useDispatch();
+
+    const {
+        movieIndonesia,
+    } = useIndonesia();
+
+    const {
+        beritaProgramming
+    } = useTechnology();
+
+    const {
+        mostPopuler
+    } = useMostPopuler();
 
     useEffect(() => {
         fetch("https://api.nytimes.com/svc/topstories/v2/world.json?api-key=ftmLzO39nIIsE4BUruG9PayJCjvRkI2U")
@@ -28,6 +43,35 @@ function Home() {
             });
     }, []);
 
+    const saveIndonesian = (berita) => {
+        let multimedia = [];
+        if (berita && berita.multimedia != null && berita.multimedia.length > 0) {
+            multimedia = berita.multimedia;
+        } else {
+            multimedia.push({ url: "kosong" });
+        }
+
+        const urls = multimedia.map((item) => {
+            return {
+                url: item.url === "kosong"
+                    ? "https://awsimages.detik.net.id/community/media/visual/2022/07/13/ilustrasi-baca-berita_169.jpeg?"
+                    : "https://www.nytimes.com/" + item.url,
+            };
+        });
+
+        dispatch(addArticle({
+            title: berita.headline.main,
+            abstract: berita.abstract,
+            multimedia: urls,
+            url: berita.web_url,
+            published_date: berita.pub_date,
+        }));
+
+        setAlertMessage(`Berita "${berita.headline.main}" berhasil disimpan!`);
+        setShowAlert(true);
+        setTimeout(() => setShowAlert(false), 2000);
+    };
+
     const handleSave = (berita) => {
         dispatch(addArticle({
             title: berita.title,
@@ -36,19 +80,19 @@ function Home() {
             url: berita.url,
             published_date: berita.published_date,
         }));
-        setAlertMessage(`Berita "${berita.title}" berhasil disimpan!`); // Set pesan alert
+        setAlertMessage(`Berita "${berita.title}" berhasil disimpan!`);
         setShowAlert(true); // Tampilkan alert
         setTimeout(() => setShowAlert(false), 2000);
     };
 
     const beritaUtama = Array.isArray(beritaHome) ? beritaHome[0] : null;
-    const teknologi = Array.isArray(beritaHome) ? beritaHome.slice(1, 7) : [];
-    const indonesia = Array.isArray(beritaHome) ? beritaHome.slice(8, 14) : [];
-    const recommended = Array.isArray(beritaHome) ? beritaHome.slice(15, 20) : [];
+    const teknologi = Array.isArray(beritaProgramming) ? beritaProgramming.slice(1, 7) : [];
+    const indonesia = Array.isArray(movieIndonesia) ? movieIndonesia.slice(1, 7) : [];
+    const populer = Array.isArray(mostPopuler) ? mostPopuler.slice(1, 6) : [];
 
     if (isLoading) {
         return (
-            <div className="text-center my-5">
+            <div className="d-flex justify-content-center min-vh-100">
                 <Spinner animation="border" role="status">
                     <span className="visually-hidden">Loading...</span>
                 </Spinner>
@@ -58,7 +102,7 @@ function Home() {
 
     return (
         <Container className="my-4">
-            {/* Latest News */}
+           
             {showAlert && (
                 <Alert
                     variant="success"
@@ -94,20 +138,20 @@ function Home() {
                     )}
                 </Col>
                 <Col md={4} className="mb-4">
-                    <h5 className="mb-3">Recommended</h5>
-                    {recommended.map((item, index) => (
+                    <h5 className="mb-3">Most Popular</h5>
+                    {populer.map((item, index) => (
                         <Card className="mb-3" key={index}>
                             <Row className="g-0">
                                 <Col md={4}>
                                     <Card.Img
-                                        src={item.multimedia?.[0]?.url || "https://via.placeholder.com/100x100"}
+                                        src={item.media?.[0]?.['media-metadata']?.[0]?.url || "https://via.placeholder.com/100x100"}
                                         style={{ height: "100px", objectFit: "cover" }}
                                     />
                                 </Col>
                                 <Col md={8}>
                                     <Card.Body>
                                         <Card.Title className="small mb-1 text-truncate">{item.title}</Card.Title>
-                                        {/* <small className="text-muted">{item.published_date}</small> */}
+                                       
                                         <Button variant="link" href={item.url} target="_blank">
                                             Selengkapnya
                                         </Button>
@@ -121,7 +165,13 @@ function Home() {
 
             {/* Teknologi Section */}
             <Row className="mb-4">
-                <h5 className="mb-3">Teknologi</h5>
+                <Stack direction="horizontal" gap={3}>
+                    <div className="p-2" >
+                        <h5>Teknologi </h5> </div>
+                    <div className="p-2 ms-auto"></div>
+                    <Button variant="link" href="/programming" >Selengkapnya</Button>
+                </Stack>
+
                 {teknologi.map((item, index) => (
                     <Col md={4} key={index}>
                         <Card className="mb-4">
@@ -144,24 +194,34 @@ function Home() {
                 ))}
             </Row>
 
-            {/* Crimestory Section */}
+            {/* Indonesia Section */}
             <Row className="mb-4">
-                <h5 className="mb-3">Indonesian</h5>
+            <Stack direction="horizontal" gap={3}>
+                    <div className="p-2" >
+                        <h5>Indonesia </h5> </div>
+                    <div className="p-2 ms-auto"></div>
+                    <Button variant="link" href="/ind" >Selengkapnya</Button>
+                </Stack>
                 {indonesia.map((item, index) => (
                     <Col md={4} key={index}>
                         <Card className="mb-4">
                             <Card.Img
                                 variant="top"
-                                src={item.multimedia?.[0]?.url || "https://via.placeholder.com/300x200"}
+                                src={item.multimedia && item.multimedia.length > 0
+                                    ? "https://www.nytimes.com/" + item.multimedia[0].url
+                                    : "https://awsimages.detik.net.id/community/media/visual/2022/07/13/ilustrasi-baca-berita_169.jpeg?"}
                                 style={{ height: "200px", objectFit: "cover" }}
                             />
                             <Card.Body>
-                                <Card.Title className="text-truncate">{item.title}</Card.Title>
+                                <Card.Title className="text-truncate">{item.headline.main}</Card.Title>
+                                <Card.Text className="text-truncate">{item.abstract}</Card.Text>
                                 <Stack direction="horizontal" gap={3}>
-                                    <Button className="p-2" variant="primary" href={indonesia.url} target="_blank">
+                                    <Button className="p-2" variant="primary" href={item.web_url} target="_blank">
                                         Selengkapnya
                                     </Button>
-                                    <Button className="p-2" variant="success" onClick={() => handleSave(item)}>Simpan</Button>
+                                    <Button className="p-2" variant="success" onClick={() => saveIndonesian(item)}>
+                                        Simpan
+                                    </Button>
                                 </Stack>
                             </Card.Body>
                         </Card>

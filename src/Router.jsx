@@ -1,7 +1,6 @@
 import { createBrowserRouter, Route, RouterProvider } from "react-router-dom";
 import Indonesia from "./Pages/Indonesia";
 import Programing from "./Pages/Programing";
-// import Search from "./Pages/Search";
 import Search from "./Pages/Search";
 import Saved from "./Pages/Saved";
 import MainLayout from "./layouts/mainLayout";
@@ -10,31 +9,31 @@ import { Navigate } from "react-router-dom";
 
 const router = createBrowserRouter([
     {
-        path: "/", // Root path
-        element: <MainLayout />, // Layout utama untuk aplikasi
+        path: "/",
+        element: <MainLayout />,
         children: [
             {
-                path: "/", // Default route akan mengarahkan ke home
+                path: "/",
                 element: <Navigate to="/home" replace />,
             },
             {
-                path: "home", // Path untuk halaman Home
+                path: "home",
                 element: <Home />,
             },
             {
-                path: "ind", // Path untuk halaman Indonesia (perbaikan dari 'ind')
+                path: "ind",
                 element: <Indonesia />,
             },
             {
-                path: "programming", // Path untuk halaman Programming
+                path: "programming",
                 element: <Programing />,
             },
             {
-                path: "saved", // Path untuk halaman Saved
+                path: "saved",
                 element: <Saved />,
             },
             {
-                path: "Search", // Path untuk halaman Search (perbaikan dari 'Search')
+                path: "search",
                 element: <Search />,
             },
         ],

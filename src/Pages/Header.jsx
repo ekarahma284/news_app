@@ -16,7 +16,7 @@ function Header() {
 
     return (
         <header>
-            <Navbar bg="primary" variant="dark" expand="lg" className="mb-3">
+            <Navbar bg="dark" variant="dark" expand="lg" className="mb-3">
                 <Container fluid>
                     <Navbar.Brand href="#">
                         <Figure className="mb-0">

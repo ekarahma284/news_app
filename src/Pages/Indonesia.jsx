@@ -1,40 +1,60 @@
-import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Card, Spinner, Stack, Button, Alert } from "react-bootstrap";
-import { addArticle } from "../slice/savedSlice";
+import React, { useState } from 'react';
+import { Container, Row, Col, Card, Spinner, Stack, Button, Alert, Pagination } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
+import { addArticle } from '../slice/savedSlice';
+import useIndonesia from '../hooks/useIndonesia';
 
-function Indonesia() {
-    const [movieIndonesia, setmovieIndonesia] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [showAlert, setShowAlert] = useState(false);
-    const [alertMessage, setAlertMessage] = useState("");
+const Indonesia = () => {
     const dispatch = useDispatch();
+    const {
+        movieIndonesia,
+        isLoading,
+        alertMessage,
+        showAlert,
+        setShowAlert,
+        setAlertMessage,
+    } = useIndonesia();
 
-    useEffect(() => {
-        const fetchData = () => {
-            fetch("https://api.nytimes.com/svc/search/v2/articlesearch.json?q=indonesian&api-key=ftmLzO39nIIsE4BUruG9PayJCjvRkI2U")
-                .then((response) => response.json())
-                .then((data) => { setmovieIndonesia(data.response.docs); setIsLoading(false); })
-                .catch((error) => { console.error("Error fetching movie utama:", error); setIsLoading(false); });
-        };
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 6; 
+    const totalPages = Math.ceil(movieIndonesia.length / itemsPerPage);
 
-        const delay = setTimeout(() => {
-            fetchData();
-        }, 1000);
+    
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
 
-        return () => clearTimeout(delay);
-    }, []);
+    
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentArticles = movieIndonesia.slice(indexOfFirstItem, indexOfLastItem);
 
     const handleSave = (berita) => {
+        let multimedia = [];
+        if (berita && berita.multimedia != null && berita.multimedia.length > 0) {
+            multimedia = berita.multimedia;
+        } else {
+            multimedia.push({ url: "kosong" });
+        }
+
+        const urls = multimedia.map((item) => {
+            return {
+                url: item.url === "kosong"
+                    ? "https://awsimages.detik.net.id/community/media/visual/2022/07/13/ilustrasi-baca-berita_169.jpeg?"
+                    : "https://www.nytimes.com/" + item.url,
+            };
+        });
+
         dispatch(addArticle({
             title: berita.headline.main,
             abstract: berita.abstract,
-            multimedia: berita.multimedia && berita.multimedia.length > 0 ? "https://www.nytimes.com/" + berita.multimedia[0].url : "https://awsimages.detik.net.id/community/media/visual/2022/07/13/ilustrasi-baca-berita_169.jpeg?",
+            multimedia: urls,
             url: berita.web_url,
             published_date: berita.pub_date,
         }));
-        setAlertMessage(`Berita "${berita.headline.main}" berhasil disimpan!`); // Set pesan alert
-        setShowAlert(true); // Tampilkan alert
+
+        setAlertMessage(`Berita "${berita.headline.main}" berhasil disimpan!`);
+        setShowAlert(true);
         setTimeout(() => setShowAlert(false), 2000);
     };
 
@@ -50,39 +70,59 @@ function Indonesia() {
                     {alertMessage}
                 </Alert>
             )}
-            {isLoading ? (<div className="d-flex justify-content-center my-5">
-                <Spinner animation="border" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                </Spinner>
-            </div>) : <Row className="mb-4">
-                <h5 className="mb-3">Indonesian</h5>
-                {movieIndonesia.map((item, index) => (
-                    <Col md={4} key={index}>
-                        <Card className="mb-4">
-                            <Card.Img
-                                variant="top"
-                                src={item.multimedia && item.multimedia.length > 0
-                                    ? "https://www.nytimes.com/" + item.multimedia[0].url
-                                    : "https://awsimages.detik.net.id/community/media/visual/2022/07/13/ilustrasi-baca-berita_169.jpeg?"}
-                                style={{ height: "200px", objectFit: "cover" }}
-                            />
-                            <Card.Body>
-                                <Card.Title className="text-truncate">{item.headline.main}</Card.Title>
-                                <Card.Text className="text-truncate">{item.abstract}</Card.Text>
-                                <Stack direction="horizontal" gap={3}>
-                                    <Button className="p-2" variant="primary" href={item.web_url} target="_blank">
-                                        Selengkapnya
-                                    </Button>
-                                    <Button className="p-2" variant="success" onClick={() => handleSave(item)}>Simpan</Button>
-                                </Stack>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                ))}
-            </Row>
-            }
+            {isLoading ? (
+                <div className="d-flex justify-content-center min-vh-100">
+                    <Spinner animation="border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                </div>
+            ) : (
+                <>
+                    <Row className="mb-4">
+                        <h5 className="mb-3">Indonesian Articles</h5>
+                        {currentArticles.map((item, index) => (
+                            <Col md={4} key={index}>
+                                <Card className="mb-4">
+                                    <Card.Img
+                                        variant="top"
+                                        src={item.multimedia && item.multimedia.length > 0
+                                            ? "https://www.nytimes.com/" + item.multimedia[0].url
+                                            : "https://awsimages.detik.net.id/community/media/visual/2022/07/13/ilustrasi-baca-berita_169.jpeg?"}
+                                        style={{ height: "200px", objectFit: "cover" }}
+                                    />
+                                    <Card.Body>
+                                        <Card.Title className="text-truncate">{item.headline.main}</Card.Title>
+                                        <Card.Text className="text-truncate">{item.abstract}</Card.Text>
+                                        <Stack direction="horizontal" gap={3}>
+                                            <Button className="p-2" variant="primary" href={item.web_url} target="_blank">
+                                                Selengkapnya
+                                            </Button>
+                                            <Button className="p-2" variant="success" onClick={() => handleSave(item)}>
+                                                Simpan
+                                            </Button>
+                                        </Stack>
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+                        ))}
+                    </Row>
+                    <Pagination className="justify-content-center">
+                        <Pagination.Prev onClick={() => currentPage > 1 && handlePageChange(currentPage - 1)} />
+                        {[...Array(totalPages)].map((_, index) => (
+                            <Pagination.Item
+                                key={index + 1}
+                                active={index + 1 === currentPage}
+                                onClick={() => handlePageChange(index + 1)}
+                            >
+                                {index + 1}
+                            </Pagination.Item>
+                        ))}
+                        <Pagination.Next onClick={() => currentPage < totalPages && handlePageChange(currentPage + 1)} />
+                    </Pagination>
+                </>
+            )}
         </Container>
     );
-}
+};
 
 export default Indonesia;
