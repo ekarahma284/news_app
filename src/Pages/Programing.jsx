@@ -4,21 +4,21 @@ import { addArticle } from "../slice/savedSlice";
 import { useDispatch } from 'react-redux';
 import useTechnology from "../hooks/useTechnology";
 
-function Programming() { 
+function Programming() {
     const dispatch = useDispatch();
 
     const {
-        beritaProgramming,
+        beritaProgramming = [], // Default value jika undefined
         isLoading,
         alertMessage,
         showAlert,
         setShowAlert,
         setAlertMessage,
     } = useTechnology();
-   
+
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 6; 
-    const totalPages = Math.ceil(beritaProgramming.length / itemsPerPage);
+    const itemsPerPage = 6;
+    const totalPages = Math.ceil((beritaProgramming?.length || 0) / itemsPerPage); // Hindari error jika undefined
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -26,11 +26,9 @@ function Programming() {
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentArticles = beritaProgramming.slice(indexOfFirstItem, indexOfLastItem);
+    const currentArticles = beritaProgramming?.slice(indexOfFirstItem, indexOfLastItem) || []; // Default empty array
 
     const handleSave = (berita) => {
-        console.log(berita);
-        
         dispatch(addArticle({
             title: berita.title,
             abstract: berita.abstract,
