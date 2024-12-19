@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 const useMostPopuler = () => {
     const [mostPopuler, setMostPopuler] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-
+    const API_KEY = process.env.REACT_APP_API_KEY;
     useEffect(() => {
         const fetchData = () => {
-            fetch("https://api.nytimes.com/svc/mostpopular/v2/emailed/7.json?api-key=ftmLzO39nIIsE4BUruG9PayJCjvRkI2U")
+            fetch(`https://api.nytimes.com/svc/mostpopular/v2/emailed/7.json?api-key=${API_KEY}`)
                 .then((response) => response.json())
                 .then((data) => {
                     setMostPopuler(data.results);

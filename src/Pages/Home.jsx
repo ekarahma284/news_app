@@ -13,6 +13,7 @@ function Home() {
     const [showAlert, setShowAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
     const dispatch = useDispatch();
+    const API_KEY = process.env.REACT_APP_API_KEY;
 
     const {
         movieIndonesia,
@@ -27,7 +28,7 @@ function Home() {
     } = useMostPopuler();
 
     useEffect(() => {
-        fetch("https://api.nytimes.com/svc/topstories/v2/world.json?api-key=ftmLzO39nIIsE4BUruG9PayJCjvRkI2U")
+        fetch(`https://api.nytimes.com/svc/topstories/v2/world.json?api-key=${API_KEY}`)
             .then((response) => response.json())
             .then((data) => {
                 if (Array.isArray(data.results)) {

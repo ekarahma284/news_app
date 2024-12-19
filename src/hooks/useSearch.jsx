@@ -5,14 +5,14 @@ const useSearch = (query, dispatch, setSearchResults) => {
     const [isLoading, setIsLoading] = useState(true);
     const [showAlert, setShowAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
-
+    const API_KEY = process.env.REACT_APP_API_KEY;
     useEffect(() => {
         if (query) {
             const fetchData = async () => {
                 setIsLoading(true);
                 try {
                     const response = await fetch(
-                        `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${query}&api-key=ftmLzO39nIIsE4BUruG9PayJCjvRkI2U`
+                        `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${query}&api-key=${API_KEY}`
                     );
                     if (!response.ok) {
                         throw new Error("Failed to fetch data");
