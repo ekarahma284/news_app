@@ -1,4 +1,4 @@
-import { createBrowserRouter, Route, RouterProvider } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import Indonesia from "./Pages/Indonesia";
 import Programing from "./Pages/Programing";
 import Search from "./Pages/Search";

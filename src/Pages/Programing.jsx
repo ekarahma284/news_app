@@ -8,7 +8,7 @@ function Programming() {
     const dispatch = useDispatch();
 
     const {
-        beritaProgramming = [], // Default value jika undefined
+        beritaProgramming = [],
         isLoading,
         alertMessage,
         showAlert,
@@ -18,7 +18,7 @@ function Programming() {
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
-    const totalPages = Math.ceil((beritaProgramming?.length || 0) / itemsPerPage); // Hindari error jika undefined
+    const totalPages = Math.ceil((beritaProgramming?.length || 0) / itemsPerPage);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -26,7 +26,7 @@ function Programming() {
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentArticles = beritaProgramming?.slice(indexOfFirstItem, indexOfLastItem) || []; // Default empty array
+    const currentArticles = beritaProgramming?.slice(indexOfFirstItem, indexOfLastItem) || [];
 
     const handleSave = (berita) => {
         dispatch(addArticle({
