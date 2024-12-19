@@ -95,9 +95,9 @@ function Search() {
                                             <Card.Text className="text-truncate">{article.abstract || "No description available"}</Card.Text>
                                             <Stack direction="horizontal" gap={3}>
                                                 <Button className="p-2" variant="primary" href={article.url} target="_blank">
-                                                    Selengkapnya
+                                                    See More
                                                 </Button>
-                                                <Button className="p-2" variant="success" onClick={() => handleSave(article)}>Simpan</Button>
+                                                <Button className="p-2" variant="success" onClick={() => handleSave(article)}>Save</Button>
                                             </Stack>
                                         </Card.Body>
                                     </Card>
