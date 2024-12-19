@@ -67,7 +67,7 @@ function Home() {
             published_date: berita.pub_date,
         }));
 
-        setAlertMessage(`Berita "${berita.headline.main}" berhasil disimpan!`);
+        setAlertMessage(`Article "${berita.headline.main}" Successfully saved!`);
         setShowAlert(true);
         setTimeout(() => setShowAlert(false), 2000);
     };
@@ -80,7 +80,7 @@ function Home() {
             url: berita.url,
             published_date: berita.published_date,
         }));
-        setAlertMessage(`Berita "${berita.title}" berhasil disimpan!`);
+        setAlertMessage(`Article "${berita.title}" Successfully saved!`);
         setShowAlert(true); // Tampilkan alert
         setTimeout(() => setShowAlert(false), 2000);
     };
@@ -129,9 +129,9 @@ function Home() {
                                 <Card.Text>{beritaUtama.abstract}</Card.Text>
                                 <Stack direction="horizontal" gap={3}>
                                     <Button className="p-2" variant="primary" href={beritaUtama.url} target="_blank">
-                                        Selengkapnya
+                                    See More
                                     </Button>
-                                    <Button className="p-2" variant="success" onClick={() => handleSave(beritaUtama)}>Simpan</Button>
+                                    <Button className="p-2" variant="success" onClick={() => handleSave(beritaUtama)}>Save</Button>
                                 </Stack>
                             </Card.Body>
                         </Card>
@@ -153,7 +153,7 @@ function Home() {
                                         <Card.Title className="small mb-1 text-truncate">{item.title}</Card.Title>
                                        
                                         <Button variant="link" href={item.url} target="_blank">
-                                            Selengkapnya
+                                            See More
                                         </Button>
                                     </Card.Body>
                                 </Col>
@@ -167,9 +167,9 @@ function Home() {
             <Row className="mb-4">
                 <Stack direction="horizontal" gap={3}>
                     <div className="p-2" >
-                        <h5>Teknologi </h5> </div>
+                        <h5>Technology </h5> </div>
                     <div className="p-2 ms-auto"></div>
-                    <Button variant="link" href="/programming" >Selengkapnya</Button>
+                    <Button variant="link" href="/programming" >See More</Button>
                 </Stack>
 
                 {teknologi.map((item, index) => (
@@ -182,11 +182,12 @@ function Home() {
                             />
                             <Card.Body>
                                 <Card.Title className="text-truncate">{item.title}</Card.Title>
+                                 <Card.Text className="text-truncate">{item.abstract}</Card.Text>
                                 <Stack direction="horizontal" gap={3}>
                                     <Button className="p-2" variant="primary" href={item.url} target="_blank">
-                                        Selengkapnya
+                                        See More
                                     </Button>
-                                    <Button className="p-2" variant="success" onClick={() => handleSave(item)}>Simpan</Button>
+                                    <Button className="p-2" variant="success" onClick={() => handleSave(item)}>Save</Button>
                                 </Stack>
                             </Card.Body>
                         </Card>
@@ -198,9 +199,9 @@ function Home() {
             <Row className="mb-4">
             <Stack direction="horizontal" gap={3}>
                     <div className="p-2" >
-                        <h5>Indonesia </h5> </div>
+                        <h5>Indonesian </h5> </div>
                     <div className="p-2 ms-auto"></div>
-                    <Button variant="link" href="/ind" >Selengkapnya</Button>
+                    <Button variant="link" href="/ind" >See More</Button>
                 </Stack>
                 {indonesia.map((item, index) => (
                     <Col md={4} key={index}>
@@ -217,10 +218,10 @@ function Home() {
                                 <Card.Text className="text-truncate">{item.abstract}</Card.Text>
                                 <Stack direction="horizontal" gap={3}>
                                     <Button className="p-2" variant="primary" href={item.web_url} target="_blank">
-                                        Selengkapnya
+                                        See More
                                     </Button>
                                     <Button className="p-2" variant="success" onClick={() => saveIndonesian(item)}>
-                                        Simpan
+                                        Save
                                     </Button>
                                 </Stack>
                             </Card.Body>

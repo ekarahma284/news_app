@@ -53,7 +53,7 @@ const Indonesia = () => {
             published_date: berita.pub_date,
         }));
 
-        setAlertMessage(`Berita "${berita.headline.main}" berhasil disimpan!`);
+        setAlertMessage(`Article "${berita.headline.main}" Successfully Saved!`);
         setShowAlert(true);
         setTimeout(() => setShowAlert(false), 2000);
     };
@@ -95,10 +95,10 @@ const Indonesia = () => {
                                         <Card.Text className="text-truncate">{item.abstract}</Card.Text>
                                         <Stack direction="horizontal" gap={3}>
                                             <Button className="p-2" variant="primary" href={item.web_url} target="_blank">
-                                                Selengkapnya
+                                                See More
                                             </Button>
                                             <Button className="p-2" variant="success" onClick={() => handleSave(item)}>
-                                                Simpan
+                                                Save
                                             </Button>
                                         </Stack>
                                     </Card.Body>

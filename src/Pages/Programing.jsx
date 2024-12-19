@@ -38,7 +38,7 @@ function Programming() {
             url: berita.url,
             published_date: berita.published_date,
         }));
-        setAlertMessage(`Berita "${berita.title}" berhasil disimpan!`);
+        setAlertMessage(`Article "${berita.title}" Successfully saved!`);
         setShowAlert(true);
         setTimeout(() => setShowAlert(false), 2000);
     };
@@ -81,9 +81,9 @@ function Programming() {
                                         <Card.Text className="text-truncate">{item.abstract}</Card.Text>
                                         <Stack direction="horizontal" gap={3}>
                                             <Button className="p-2" variant="primary" href={item.url} target="_blank">
-                                                Selengkapnya
+                                                See More
                                             </Button>
-                                            <Button className="p-2" variant="success" onClick={() => handleSave(item)}>Simpan</Button>
+                                            <Button className="p-2" variant="success" onClick={() => handleSave(item)}>Save</Button>
                                         </Stack>
                                     </Card.Body>
                                 </Card>

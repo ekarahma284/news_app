@@ -31,20 +31,20 @@ function Header() {
                         </Offcanvas.Header>
 
                         <Offcanvas.Body>
-                            <Nav className="justify-content-end flex-grow-1 pe-3">
+                            <Nav className="justify-content-end flex-grow-1 pe-3 fw-bold navbar-dark">
                                 <Nav.Link href="/home">Home</Nav.Link>
                                 <NavDropdown title="More" id="offcanvasNavbarDropdown">
-                                    <NavDropdown.Item href="/ind">Indonesia</NavDropdown.Item>
-                                    <NavDropdown.Item href="/programming">Programing</NavDropdown.Item>
+                                    <NavDropdown.Item href="/ind">Indonesian</NavDropdown.Item>
+                                    <NavDropdown.Item href="/programming">Technology</NavDropdown.Item>
                                     <NavDropdown.Item href="/saved">Saved</NavDropdown.Item>
                                 </NavDropdown>
                             </Nav>
 
-                            <Form className="d-flex ms-auto mt-3 mt-lg-0" onSubmit={handleSearch}>
+                            <Form className="d-flex xs-auto mt-5 mt-lg-1" onSubmit={handleSearch}>
                                 <Form.Control
                                     type="text"
-                                    placeholder="Search articles, news, or topics"
-                                    className="shadow-sm me-2"
+                                    placeholder="Search articles"
+                                    className="shadow-sm me-3"
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                 />

@@ -7,14 +7,14 @@ const Footer = () => {
             <Container>
                 <Row className="md-4">
                     <Col md={4}>
-                        <h5 className="text-uppercase mb-3">Link Terkait</h5>
+                        <h5 className="text-uppercase mb-3">Related link</h5>
                         <ul className="list-unstyled">
-                            <li><a href="/ind" className="text-white hover-link">Indonesia</a></li>
-                            <li><a href="/programming" className="text-white hover-link">Programming</a></li>
+                            <li><a href="/ind" className="text-white hover-link">Indonesian</a></li>
+                            <li><a href="/programming" className="text-white hover-link">Technology</a></li>
                         </ul>
                     </Col>
                     <Col md={4} className="text-center">
-                        <h5 className="text-uppercase mb-3">Informasi</h5>
+                        <h5 className="text-uppercase mb-3">Informations</h5>
                         <ul className="list-unstyled">
                             <li className="d-flex align-items-center mb-2">
                                 <span>Jl. Pandansari-Kaligua, Kec. Paguyangan, Brebes, Jawa Tengah 52276</span>
