@@ -10,6 +10,7 @@ const useTechnology = () => {
     useEffect(() => {
         const fetchData = () => {
             const API_KEY = process.env.REACT_APP_API_KEY;
+            
             fetch(`https://api.nytimes.com/svc/topstories/v2/technology.json?api-key=${API_KEY}`)
                 .then((response) => response.json())
                 .then((data) => {
