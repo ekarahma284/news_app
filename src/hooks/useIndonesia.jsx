@@ -1,4 +1,3 @@
-// src/hooks/useIndonesia.js
 import { useEffect, useState } from 'react';
 
 const useIndonesia = () => {

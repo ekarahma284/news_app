@@ -4,7 +4,7 @@ import { Container, Row, Col, Card, Button, Spinner, Stack, Alert, Pagination } 
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchResults } from "../slice/searchSlice";
 import { addArticle } from '../slice/savedSlice';
-import useSearch from "../hooks/useSearch"; // Import custom hook
+import useSearch from "../hooks/useSearch";
 
 function Search() {
     const dispatch = useDispatch();
@@ -12,7 +12,6 @@ function Search() {
     const location = useLocation();
     const query = new URLSearchParams(location.search).get("q");
 
-    // Panggil custom hook useSearch
     const { beritaSearch, isLoading, showAlert, alertMessage, setShowAlert,setAlertMessage } = useSearch(query, dispatch, setSearchResults);
 
     const [currentPage, setCurrentPage] = useState(1);
