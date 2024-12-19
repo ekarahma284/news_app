@@ -49,7 +49,7 @@ function Search() {
             url: berita.web_url,
             published_date: berita.pub_date,
         }));
-        setAlertMessage(`Berita "${berita.headline.main}" berhasil disimpan!`);
+        setAlertMessage(`Article "${berita.headline.main}" Successfully Saved!`);
         setShowAlert(true);
         setTimeout(() => setShowAlert(false), 2000);
     };
