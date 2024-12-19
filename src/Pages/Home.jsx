@@ -13,7 +13,6 @@ function Home() {
     const [showAlert, setShowAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
     const dispatch = useDispatch();
-    const API_KEY = process.env.REACT_APP_API_KEY;
 
     const {
         movieIndonesia,
@@ -28,6 +27,7 @@ function Home() {
     } = useMostPopuler();
 
     useEffect(() => {
+        const API_KEY = process.env.REACT_APP_API_KEY;
         fetch(`https://api.nytimes.com/svc/topstories/v2/world.json?api-key=${API_KEY}`)
             .then((response) => response.json())
             .then((data) => {
@@ -103,7 +103,7 @@ function Home() {
 
     return (
         <Container className="my-4">
-           
+
             {showAlert && (
                 <Alert
                     variant="success"
@@ -130,7 +130,7 @@ function Home() {
                                 <Card.Text>{beritaUtama.abstract}</Card.Text>
                                 <Stack direction="horizontal" gap={3}>
                                     <Button className="p-2" variant="primary" href={beritaUtama.url} target="_blank">
-                                    See More
+                                        See More
                                     </Button>
                                     <Button className="p-2" variant="success" onClick={() => handleSave(beritaUtama)}>Save</Button>
                                 </Stack>
@@ -152,7 +152,7 @@ function Home() {
                                 <Col md={8}>
                                     <Card.Body>
                                         <Card.Title className="small mb-1 text-truncate">{item.title}</Card.Title>
-                                       
+
                                         <Button variant="link" href={item.url} target="_blank">
                                             See More
                                         </Button>
@@ -183,7 +183,7 @@ function Home() {
                             />
                             <Card.Body>
                                 <Card.Title className="text-truncate">{item.title}</Card.Title>
-                                 <Card.Text className="text-truncate">{item.abstract}</Card.Text>
+                                <Card.Text className="text-truncate">{item.abstract}</Card.Text>
                                 <Stack direction="horizontal" gap={3}>
                                     <Button className="p-2" variant="primary" href={item.url} target="_blank">
                                         See More
@@ -198,7 +198,7 @@ function Home() {
 
             {/* Indonesia Section */}
             <Row className="mb-4">
-            <Stack direction="horizontal" gap={3}>
+                <Stack direction="horizontal" gap={3}>
                     <div className="p-2" >
                         <h5>Indonesian </h5> </div>
                     <div className="p-2 ms-auto"></div>

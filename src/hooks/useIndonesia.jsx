@@ -5,9 +5,9 @@ const useIndonesia = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [alertMessage, setAlertMessage] = useState("");
     const [showAlert, setShowAlert] = useState(false);
-    const API_KEY = process.env.REACT_APP_API_KEY;
     useEffect(() => {
         const fetchData = () => {
+            const API_KEY = process.env.REACT_APP_API_KEY;
             fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=indonesian&api-key=${API_KEY}`)
                 .then((response) => response.json())
                 .then((data) => {

@@ -5,10 +5,10 @@ const useSearch = (query, dispatch, setSearchResults) => {
     const [isLoading, setIsLoading] = useState(true);
     const [showAlert, setShowAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
-    const API_KEY = process.env.REACT_APP_API_KEY;
     useEffect(() => {
         if (query) {
             const fetchData = async () => {
+                const API_KEY = process.env.REACT_APP_API_KEY;
                 setIsLoading(true);
                 try {
                     const response = await fetch(
