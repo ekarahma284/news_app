@@ -5,16 +5,19 @@ const useTechnology = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [showAlert, setShowAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
-    
-    
+
+
     useEffect(() => {
         const fetchData = () => {
             const API_KEY = process.env.REACT_APP_API_KEY;
-            
             fetch(`https://api.nytimes.com/svc/topstories/v2/technology.json?api-key=${API_KEY}`)
                 .then((response) => response.json())
                 .then((data) => {
-                    setBeritaProgramming(data.results);
+                    if (Array.isArray(data.results)) {
+                        setBeritaProgramming(data.results);
+                    } else {
+                        console.error("Data results is not an array:", data);
+                    }
                     setIsLoading(false);
                 })
                 .catch((error) => {
